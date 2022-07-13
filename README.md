@@ -34,7 +34,7 @@ If you want the app to launch on startup check the ![Startup check](https://gith
 
 This also allows the app to launch in the background.
 
-To see the window look for the icon in the system tray on the bottom right of the screen.
+To see the window click the app icon in the system tray on the bottom right of the screen ![icon in system tray](https://github.com/playtunes100/OneClipboard/blob/5b8b6b6efd208f1478eeb20354df4179e474c933/images/system%20tray.png)
 
 
 
