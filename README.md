@@ -11,8 +11,7 @@ The RichTextbox is used to edit clipboard data and update the clipboard
 Changes to the clipboard are detected by a [SharpClipboard](https://github.com/Willy-Kimura/SharpClipboard) event handler and added to the file in Onedrive
 
 ## How to use
-
-After cloning or downloading the repo navigate to `.\Oneclipboard\publish`
+Download and extract the `OneClipboard v1.0.0.zip` file
 
 run the `setup.exe` file
 
