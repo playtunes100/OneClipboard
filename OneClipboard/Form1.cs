@@ -110,6 +110,7 @@ namespace OneClipboard
                 fileSystemWatcher.Path = Path.GetDirectoryName(Properties.Settings.Default["clipboard_file_path"].ToString());
                 labelStartWatch.Text = "Watching folder...";
             }
+            else { MessageBox.Show("No file could be found, select a file."); }
         }
 
         // listens to the file changes for updates
