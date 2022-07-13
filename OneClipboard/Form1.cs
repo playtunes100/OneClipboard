@@ -54,6 +54,8 @@ namespace OneClipboard
             DialogResult result = openFileDialog.ShowDialog();
             if (result == DialogResult.OK)
             {
+                //following lines save the selected file's path to app settings to be used when the app launches again
+                // or when launching during startup
                 Properties.Settings.Default["clipboard_file_path"] = openFileDialog.FileName;
                 Properties.Settings.Default.Save();
                 labelFileSelected.Text = Properties.Settings.Default["clipboard_file_path"].ToString();
@@ -88,12 +90,12 @@ namespace OneClipboard
             }
         }
 
-        // adds text in the RichTextBox to the clipboard file
+        // adds text in the RichTextBox to the clipboard
         private void buttonAddtoClip_Click(object sender, EventArgs e)
         {
-            //for now this button writes to the file which will then be read by file system watcher
-            writeClipboardFile(richTextBoxClipboard.Text);
-            //Clipboard.SetText(richTextBox1.Text);
+            
+            //writeClipboardFile(richTextBoxClipboard.Text);
+            Clipboard.SetText(richTextBoxClipboard.Text);
         }
 
         // Start listening to the file changes for updates
@@ -110,6 +112,7 @@ namespace OneClipboard
             }
         }
 
+        // listens to the file changes for updates
         private void fileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             readClipboardFile();
@@ -134,9 +137,10 @@ namespace OneClipboard
                 // The using statement also closes the StreamReader.
                 using (StreamReader sr = new StreamReader(Properties.Settings.Default["clipboard_file_path"].ToString()))
                 {
-                    // Read the stream as a string
+                    
                     string line = sr.ReadToEnd();
-                    if (line != (String)Clipboard.GetDataObject().GetData(DataFormats.Text))
+                    //Check if the read string is the same as clipboard text
+                    if (line != (string)Clipboard.GetDataObject().GetData(DataFormats.Text))
                     {
                         Clipboard.SetText(line);
                         getClipboardData();
@@ -148,7 +152,7 @@ namespace OneClipboard
             catch (Exception exception)
             {
                 // Let the user know what went wrong.
-                //MessageBox.Show("The file could not be read:\n Error Message: " + exception.Message);
+                MessageBox.Show("The file could not be read:\n Error Message: " + exception.Message);
 
             }
         }
@@ -156,18 +160,32 @@ namespace OneClipboard
         //writes data to he clipboard file in OneDrive
         private void writeClipboardFile(string data)
         {
-            using (StreamWriter sw = new StreamWriter(Properties.Settings.Default["clipboard_file_path"].ToString()))
+            try
             {
-                sw.Write(data);
-                
-
+                using (StreamWriter sw = new StreamWriter(Properties.Settings.Default["clipboard_file_path"].ToString()))
+                {
+                    sw.Write(data);
+                }
             }
+            catch (Exception exception)
+            {
+                //MessageBox.Show("The file could not be written:\n Error Message: " + exception.Message);
+            }
+            
 
         }
-
+        // listens for clipboard changes and writes the text to the clipboard file
         private void sharpClipboard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
+
+            writeClipboardFile((String)Clipboard.GetDataObject().GetData(DataFormats.Text));
             getClipboardData();
+            
         }
+
+        /* REMARKS
+         * The listeners confuse me, sometimes they report 1 change twice
+         * i ignore their exceptions on purpose
+         */
     }
 }

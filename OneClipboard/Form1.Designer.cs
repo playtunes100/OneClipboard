@@ -91,7 +91,7 @@
             this.buttonAddtoClip.Name = "buttonAddtoClip";
             this.buttonAddtoClip.Size = new System.Drawing.Size(109, 23);
             this.buttonAddtoClip.TabIndex = 4;
-            this.buttonAddtoClip.Text = "Sync Clipboard";
+            this.buttonAddtoClip.Text = "Add to Clipboard";
             this.buttonAddtoClip.UseVisualStyleBackColor = true;
             this.buttonAddtoClip.Click += new System.EventHandler(this.buttonAddtoClip_Click);
             // 
@@ -154,19 +154,19 @@
             // 
             this.fileSystemWatcher.EnableRaisingEvents = true;
             this.fileSystemWatcher.Filter = "*.txt*";
-            this.fileSystemWatcher.NotifyFilter = ((System.IO.NotifyFilters)((System.IO.NotifyFilters.FileName | System.IO.NotifyFilters.LastWrite)));
+            this.fileSystemWatcher.NotifyFilter = System.IO.NotifyFilters.LastWrite;
             this.fileSystemWatcher.SynchronizingObject = this;
             this.fileSystemWatcher.Changed += new System.IO.FileSystemEventHandler(this.fileSystemWatcher_Changed);
             // 
             // sharpClipboard
             // 
             this.sharpClipboard.MonitorClipboard = true;
-            this.sharpClipboard.ObservableFormats.All = true;
+            this.sharpClipboard.ObservableFormats.All = false;
             this.sharpClipboard.ObservableFormats.Files = false;
             this.sharpClipboard.ObservableFormats.Images = false;
             this.sharpClipboard.ObservableFormats.Others = false;
             this.sharpClipboard.ObservableFormats.Texts = true;
-            this.sharpClipboard.ObserveLastEntry = true;
+            this.sharpClipboard.ObserveLastEntry = false;
             this.sharpClipboard.Tag = null;
             this.sharpClipboard.ClipboardChanged += new System.EventHandler<WK.Libraries.SharpClipboardNS.SharpClipboard.ClipboardChangedEventArgs>(this.sharpClipboard_ClipboardChanged);
             // 
